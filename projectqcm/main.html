@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .class{
+            font-family: Andalus sans-serif;
+            text-decoration: underline;
+            font-weight: bold;
+            font-size: 30px;
+        }
+        .component{
+            visibility: hidden;
+        }
+        .component2{
+            visibility: visible;
+            background-color: grey;
+        }
+        button{
+            width:80%;
+            background-color: red;
+            padding: 10%;
+            margin-top: 30%;
+            margin-left: 10%;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .h{
+            font-weight: bold;
+            font-size: 40px;
+            color: blue;
+        }
+        .n{
+            width:100%;
+            text-align: center;
+            color:white;
+            background-color: blue;
+            margin-bottom: 100px;
+
+        }
+    </style>
+    <script>
+        //the timer function
+        function startCountdown(durationInSeconds, onComplete)
+         {  a=document.getElementById("the_first")
+            let remainingTime = durationInSeconds;
+
+            const interval = setInterval(() => {
+                remainingTime--;
+                a.innerText=`Time left: ${remainingTime} seconds`;
+
+                if (remainingTime <= 0) {
+                    clearInterval(interval);
+                    if (typeof onComplete === "function") {
+                        onComplete();
+                    }
+                }
+            }, 1000);
+        }
+        //the first button to start the quiz
+        function bu_tt_on() {
+            document.querySelector("button").className="component"
+            startCountdown(2,sho_w)
+        }
+        // the function controlling what will be displayed and what not
+        function sho_w(index=1) {
+             if (index>8){
+                 let y=score()
+                 for(let i=1;i<9;i++){
+                     document.getElementById("m"+i).className="component2"
+                 }
+                 let z=document.getElementById("the_score")
+                 z.className="h"
+                 z.innerText=`YOUR SCORE IS  `+ y+"/8"
+
+             }
+              else{
+
+                  if (index==1){
+                      document.getElementById("m"+index).className="component2"
+                      startCountdown(5,()=>sho_w(index+1))
+                  }
+                  else{
+                      document.getElementById("m"+(index-1)).className="component"
+                      document.getElementById("m"+index).className="component2"
+                      startCountdown(5,()=>sho_w(index+1))
+
+
+                  }
+
+              }
+
+
+        }
+        // function of the score
+        function score() {
+            let score=0
+            let array=document.querySelectorAll("input[type=radio]")
+            for (let i=0;i<array.length;i++){
+                if (array[i].checked && array[i].value==="true"){
+                    score+=1;
+                }
+
+
+            }
+            return score
+        }
+
+    </script>
+</head>
+<body>
+<div id="the_first" class="n"></div>
+<div id="the_score"></div>
+<button onclick="bu_tt_on()">Take the quiz</button>
+<!--each div represents a question with the choices-->
+    <div id="m1" class="component">
+        <div class="class">1.Quelle est la principale fonction d’un sérum pour le visage</div><br>
+        <input type="radio" value="false">
+        <label>Hydrater la peau comme une crème hydratante</label><br>
+        <input type="radio" value="true">
+        <label>Apporter des actifs concentrés pour cibler un besoin précis</label><br>
+        <input type="radio" value="false">
+        <label>Servir uniquement à illuminer le teint</label>
+    </div>
+    <br>
+    <div id="m2" class="component">
+        <div class="class">2.Quel ingrédient est connu pour ses propriétés anti-âge ?</div><br>
+        <input type="radio" value="false" >
+        <label> Le charbon actif</label><br>
+        <input type="radio" value="false">
+        <label>Le silicone</label><br>
+        <input type="radio" value="true">
+        <label> L’acide hyaluronique</label>
+    </div>
+    <br>
+    <div id="m3" class="component">
+        <div class="class">3.Quel est le pH idéal d’un nettoyant visage pour respecter la barrière cutanée ?</div><br>
+        <input type="radio" value="true">
+        <label> pH 5.5 (proche du pH de la peau) </label><br>
+        <input type="radio" value="false">
+        <label>pH 9 (alcalin)</label><br>
+        <input type="radio"  value="false">
+        <label> pH 2 (très acide)</label>
+    </div>
+    <br>
+    <div id="m4" class="component">
+        <div class="class">4.Quelle huile végétale est particulièrement recommandée pour les peaux grasses ?</div><br>
+        <input type="radio"  value="false">
+        <label> L’huile de coco </label><br>
+        <input type="radio"  value="true">
+        <label>L’huile de jojoba</label><br>
+        <input type="radio"  value="false">
+        <label> L’huile d’argan</label>
+    </div>
+    <br>
+    <div id="m5" class="component">
+        <div class="class">5.Quel est le rôle du SPF dans une crème solaire ?</div><br>
+        <input type="radio"  value="false" >
+        <label> Hydrater la peau </label><br>
+        <input type="radio"  value="true">
+        <label>Protéger contre les rayons UV</label><br>
+        <input type="radio"  value="false">
+        <label> Donner un effet bronzant immédiat</label>
+    </div>
+    <br>
+    <div id="m6" class="component">
+        <div class="class">6.Quelle est la meilleure façon d’appliquer une crème contour des yeux ?</div><br>
+        <input type="radio"   value="false">
+        <label> En appliquant une grande quantité de produit </label><br>
+        <input type="radio"  value="false">
+        <label>En massant avec un coton</label><br>
+        <input type="radio"  value="true">
+        <label> En tapotant délicatement avec l’annulaire</label>
+    </div>
+    <br>
+    <div id="m7" class="component">
+        <div class="class">7. Quel ingrédient est souvent utilisé pour exfolier la peau chimiquement ?</div><br>
+        <input type="radio"  value="true">
+        <label> Les AHA (acides alpha-hydroxylés) </label><br>
+        <input type="radio"  value="false">
+        <label> L’argile verte</label><br>
+        <input type="radio"  value="false">
+        <label> L’huile d’amande douce</label>
+    </div>
+    <br>
+    <div id="m8" class="component">
+        <div class="class">8. Pourquoi l’acide ascorbique (vitamine C pure) est-il souvent encapsulé ou mélangé avec d’autres ingrédients ?</div><br>
+        <input type="radio"  value="true" >
+        <label> Parce qu’il est instable et s’oxyde rapidement</label><br>
+        <input type="radio"  value="false">
+        <label> Parce qu’il est trop agressif pour la peau en forte concentration</label><br>
+        <input type="radio"  value="false">
+        <label> Parce qu’il ne peut pas pénétrer la peau sans un solvant spécial</label>
+    </div>
+
+</body>
+</html>

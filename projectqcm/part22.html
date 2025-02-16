@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz App</title>
+    <style>
+        body {
+            background-color: #393838;
+            font-family: Arial, sans-serif;
+        }
+        div {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        label {
+            color: white;
+            font-size: 20px;
+        }
+        input[type="number"] {
+            width: 87%;
+            padding: 10px;
+        }
+
+        select {
+            width: 90%;
+            padding: 10px;
+        }
+        button {
+            width: 90%;
+            text-align: center;
+            padding: 20px;
+            margin-left: 10px;
+            color: white;
+            background-color: #191818;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #333;
+        }
+        .question-block {
+            margin-bottom: 20px;
+            color: white;
+        }
+        .question-block p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .question-block label {
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        #quiz-container {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        // to get the url of the file where we have the questions
+        function get_url() {
+            var amount = document.getElementById("amount").value;
+            var difficulty = document.getElementById("diff").value;
+            var categ = document.getElementById("cat").value;
+            var type = document.getElementById("tpe").value;
+            var code = document.getElementById("code").value;
+
+            if (categ === "Any Category") categ = "";
+            if (difficulty === "Any Difficulty") difficulty = "";
+            if (type === "Any Type") type = "";
+            if (code === "Default Encoding") code = "";
+
+            var li_nk = `https://opentdb.com/api.php?amount=${amount}&category=${categ}&difficulty=${difficulty}&type=${type}&encode=${code}`;
+            return li_nk;
+        }
+         //converting the file to  ajson file then we will get all the information from this file
+        function displayQuestions(data) {
+            let quiz_ques_Container = document.getElementById("quiz-container");
+            quiz_ques_Container.innerHTML = "";
+
+            data.results.forEach((questionData, index) => {
+                let question = document.createElement("div");
+                question.classList.add("question-block");
+                let question_Text = document.createElement("div");
+                question_Text.innerHTML = `${index + 1}: ${questionData.question}`;
+                question.appendChild(question_Text);
+
+                let answers = [...questionData.incorrect_answers, questionData.correct_answer];
+                answers.forEach(answer => {
+                    let ans_Row = document.createElement("div");
+                    ans_Row.style.display = "flex";
+                    ans_Row.style.flexDirection="row";
+
+                    let radio__Input = document.createElement("input");
+                    radio__Input.type = "radio";
+                    radio__Input.name = `question${index}`;
+                    radio__Input.value = answer;
+                    radio__Input.dataset.correct = answer === questionData.correct_answer;
+
+                    let Label = document.createElement("label");
+                    Label.innerHTML = answer;
+                    question_Text.style.textDecoration="underline"
+                    Label.style.color="pink"
+
+
+                    ans_Row.appendChild(radio__Input);
+                    ans_Row.appendChild(Label);
+                    question.appendChild(ans_Row);
+                });
+
+                quiz_ques_Container.appendChild(question);
+            });
+            //a button to submit the user's answers
+            let submitBtn = document.createElement("button");
+            submitBtn.innerHTML = "Submit Quiz Now!";
+            submitBtn.onclick = calculateScore;
+            quiz_ques_Container.appendChild(submitBtn);
+        }
+        //function of the score
+        function calculateScore() {
+            let score = 0;
+            let questions = document.querySelectorAll(".question-block");
+
+            questions.forEach((question, index) => {
+                let selectedAnswer = question.querySelector(`input[name="question${index}"]:checked`);
+                if (selectedAnswer && selectedAnswer.dataset.correct === "true") {
+                    score++;
+                }
+            });
+
+            alert(`YOUR FINAL SCORE IS: ${score}/${questions.length}`);
+        }
+        // when you press on get the url
+        function su_bmi_t(event) {
+            event.preventDefault();
+            let url = get_url();
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    displayQuestions(data);
+                })
+        }
+    </script>
+</head>
+<body>
+<h1 style="color: white; font-size: 24px;">Quiz App</h1>
+<form id="form" onsubmit="su_bmi_t(event)">
+    <!--a form to gather all the information of the quiz-->
+    <div>
+        <label>Number of Questions:</label>
+        <input type="number" placeholder="10" id="amount" required>
+    </div>
+    <div>
+        <label>Select Category:</label>
+        <select id="cat">
+            <option value="">Any Category</option>
+            <option value="9">General Knowledge</option>
+            <option value="10">Entertainment: Books</option>
+            <option value="11">Entertainment: Film</option>
+            <option value="12">Entertainment: Music</option>
+            <option value="13">Entertainment: Musicals & Theatres</option>
+            <option value="14">Entertainment: Television</option>
+            <option value="15">Entertainment: Video Games</option>
+            <option value="16">Entertainment: Board Games</option>
+            <option value="17">Science & Nature</option>
+            <option value="18">Science: Computers</option>
+            <option value="19">Science: Mathematics</option>
+            <option value="20">Mythology</option>
+            <option value="21">Sports</option>
+            <option value="22">Geography</option>
+            <option value="23">History</option>
+            <option value="24">Politics</option>
+            <option value="25">Art</option>
+            <option value="26">Celebrities</option>
+            <option value="27">Animals</option>
+            <option value="28">Vehicles</option>
+            <option value="29">Entertainment: Comics</option>
+            <option value="30">Science: Gadgets</option>
+            <option value="31">Entertainment: Japanese Anime & Manga</option>
+            <option value="32">Entertainment: Cartoon & Animations</option>
+        </select>
+    </div>
+    <div>
+        <label>Select Difficulty:</label>
+        <select id="diff">
+            <option value="">Any Difficulty</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    </div>
+    <div>
+        <label>Select Type:</label>
+        <select id="tpe">
+            <option value="">Any Type</option>
+            <option value="multiple">Multiple Choice</option>
+            <option value="boolean">True/False</option>
+        </select>
+    </div>
+    <div>
+        <label>Select Encoding:</label>
+        <select id="code">
+            <option value="">Default Encoding</option>
+            <option value="urlLegacy">Legacy URL Encoding</option>
+            <option value="url3986">URL Encoding (RFC 3986)</option>
+            <option value="base64">Base64 Encoding</option>
+        </select>
+    </div>
+    <button type="submit">Generate Quiz</button>
+</form>
+<div id="quiz-container"></div>
+</body>
+</html>
