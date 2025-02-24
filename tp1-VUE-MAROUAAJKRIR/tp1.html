@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Manipulation de vue</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+	#mon{
+		display: flex;
+		flex-direction: row;
+		
+	}
+	
+
+</style>
+</head>
+<body>
+
+<div id="monapp" >
+	<div>
+		<button @click = "change_title">{{titre}}</button>
+	</div>
+	
+
+	<div id="mon">
+		<button @click="increment">++</button>
+		<label>{{num}}</label>
+		<button @click = "decrement">--</button>
+	</div>
+
+	<div>
+		<input type="text" v-model="text" @keyup ="onspace" >
+		<p v-if="affichage" > ATTENTION DES ESPACES SONT DANS VOTRE TEXTE</p>
+	</div>
+
+</div>
+
+
+
+
+<script>
+	const appli = {
+		data () {
+				return {
+					titre: "Cliquez moi !",
+					nouveau_titre : "Clique ! ",
+					num : 0,
+					affichage : false,
+					text:''
+				};
+			},
+			methods : {
+				change_title(){
+					 this.titre = this.nouveau_titre;
+				},
+				increment(){
+                    this.num += 1
+				},
+				decrement(){
+                     this.num -= 1
+				},
+				onspace(){
+					this.affichage = this.text.includes(" ");
+				}
+
+			}
+	};
+
+	
+Vue.createApp(appli).mount("#monapp");
+</script>
+
+</body>
+</html>
