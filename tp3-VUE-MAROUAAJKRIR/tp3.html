@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+    body {
+    background-color: #F3E8FF; 
+  
+    font-family: Arial, sans-serif;
+}
+
+    .btn-focus:focus {
+                background-color: rgb(208, 188, 212);
+                outline: none;
+                border: 2px solid rgb(54, 34, 60);
+     }
+
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 70px;
+        text-decoration: underline;
+    }
+
+    fieldset {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        border: none;
+    }
+
+    button {
+        font-weight: bold;
+        padding-right: 20px;
+        padding-left: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border: 2px solid rgb(54, 34, 60);
+        background-color: rgb(52, 35, 61);
+        cursor: pointer;
+        border-radius: 5px;
+        color:white
+    }
+
+    button:hover {
+        background-color: rgb(176, 120, 188);
+        color: white;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        text-align: center;
+    }
+
+    li {
+        margin: 10px 0;
+        margin-bottom: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .text{
+        margin-bottom: 20px;
+        font-size: 30px;
+        text-align: center;
+        color: #36223C;
+        
+    }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Liste des Tâches</h1>
+        <fieldset>
+            <legend :class="{text:clas}">Filtrer les tâches</legend>
+            <button :class="{'btn-focus':clas}" @click="toutes">Toutes</button>
+            <button :class="{'btn-focus':clas}" @click="faire">À faire</button>
+            <button :class="{'btn-focus':clas}" @click="terminees">Terminées</button>
+        </fieldset>
+        <ul type="disk">
+            <li v-for="tache in tachesFiltrees">
+                {{ tache.id }} - {{ tache.title }} :
+                {{ tache.description }} -> {{ tache.completed }} <br>
+                <button v-show ="!tache.completed" @click="marquer(tache)">Terminer</button>
+            </li>
+        </ul>
+        <p :class="{text:clas}">Total des tâches : {{total}}</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    affichage : "toutes",
+                    clas : true ,
+                    taches: [
+                       {
+                        "id": 1,
+                        "title": "Faire les courses",
+                        "description": "Acheter des légumes et du lait.",
+                        "completed": false
+                              },
+                        {
+                        "id": 2,
+                        "title": "Faire du sport",
+                        "description": "Courir pendant 30 minutes.",
+                        "completed": true
+                             },
+                        {
+                        "id": 3,
+                        "title": "Réviser pour l'examen",
+                        "description": "Relire le chapitre 5 du manuel.",
+                        "completed": false
+                              }
+                    ]
+                        
+                };
+            },
+            methods : {
+				marquer(tache){
+                    tache.completed = true;
+                },
+                toutes(){
+                    this.affichage = "toutes"
+
+                },
+                terminees(){
+                     this.affichage = "finished"
+                  
+                },
+                faire(){
+                    this.affichage = "todo"
+
+                },
+
+
+
+			},
+            computed :{
+                    total() {
+                        return this.taches.length;
+                    },
+                    tachesFiltrees() {
+                    if (this.affichage === 'toutes') {
+                        return this.taches;
+                    } else if (this.affichage === 'finished') {
+                        return this.taches.filter(tache => tache.completed);
+                    } else if (this.affichage === 'todo') {
+                        return this.taches.filter(tache => !tache.completed);
+                    }
+                }
+
+            }
+           
+        });
+        app.mount('#app');
+    </script>
+</body>
+</html>
