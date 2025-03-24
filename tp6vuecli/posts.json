@@ -1,0 +1,94 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Introduction à Vue.js",
+      "body": "Vue.js est un framework progressif pour la construction d'interfaces utilisateur...",
+      "tags": [
+        "vue",
+        "javascript",
+        "frontend"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Comprendre le Virtual DOM",
+      "body": "Le Virtual DOM est une technique utilisée par les frameworks modernes comme Vue et React...",
+      "tags": [
+        "vue",
+        "performance",
+        "optimisation"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Pourquoi utiliser Vue Router ?",
+      "body": "Vue Router est une bibliothèque qui permet de gérer la navigation entre les pages...",
+      "tags": [
+        "vue",
+        "router",
+        "navigation"
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Les directives essentielles de Vue",
+      "body": "Les directives comme v-if, v-for, et v-model permettent de manipuler le DOM efficacement...",
+      "tags": [
+        "vue",
+        "directives",
+        "dom"
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Créer un blog avec Vue et Firebase",
+      "body": "Firebase permet de stocker des articles en temps réel et de les récupérer dynamiquement...",
+      "tags": [
+        "vue",
+        "firebase",
+        "backend"
+      ]
+    },
+    {
+      "id": "c8ba",
+      "title": "",
+      "body": "",
+      "tags": [
+        ""
+      ]
+    },
+    {
+      "id": "8ce8",
+      "title": "",
+      "body": "",
+      "tags": [
+        ""
+      ]
+    },
+    {
+      "id": "0922",
+      "title": "",
+      "body": "",
+      "tags": [
+        ""
+      ]
+    },
+    {
+      "id": "ccd5",
+      "title": "1vdv",
+      "body": "",
+      "tags": [
+        ""
+      ]
+    },
+    {
+      "id": "a31f",
+      "title": "fgfgn",
+      "body": "dsdsvdf",
+      "tags": [
+        "[\"vue\"]"
+      ]
+    }
+  ]
+}
